@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+// import React from 'react';
+// import './App.css';
+  
+  var request = new XMLHttpRequest()
+ 
+ request.open('GET', 'https://api.github.com/users/mayankarote/repos', true)
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  request.onload = function () {
+    // Begin accessing JSON data here
+    var data = JSON.parse(this.response);
 
-export default App;
+    var statusHTML = '';
+    $.each(data, function (i, status) {
+      statusHTML += '<tr>';
+      statusHTML += '<td>' + status.id + '</td>';
+      statusHTML += '<td>' + status.name + '</td>';
+      statusHTML += '<td>' + status.html_url + '</td>';
+      statusHTML += '<td>' + status.language + '</td>';
+      statusHTML += '</tr>';
+    });
+    
+    $('tbody').html(statusHTML);
+  }
+request.send();
+  
+// export default App;
